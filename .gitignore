@@ -1,0 +1,7 @@
+# macOS Sistem Dosyalari
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# VS Code ayar klasoru
+.vscode/
