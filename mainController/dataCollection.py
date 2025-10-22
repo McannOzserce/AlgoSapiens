@@ -5,3 +5,4 @@
 # In first version this collector collect only bitcoin's datas
 x = 5
 y = 56
+z = 5
