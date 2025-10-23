@@ -1,8 +1,6 @@
-# AlgoSapiens's first dataCollection file dataCollection.py 
-
-# This will get datas on binance Api 
-
-# In first version this collector collect only bitcoin's datas
+# AlgoSapiens - Data Collection Script
+# Fetches historical kline (candle) data from the Binance API.
+# This script retrieves data in batches and saves it as a Parquet file.
 
 import pandas as pd
 from binance.client import Client
@@ -11,28 +9,28 @@ import time
 import math
 
 def fetch_binance_data(total_candles, symbol, interval=Client.KLINE_INTERVAL_5MINUTE):
-   
-    # 1. API İstemcisini Başlat
+    
+    # 1. Initialize API Client
     try:
         client = Client()
         client.ping()
-        print("Binance API bağlantısı başarılı.")
+        print("Binance API connection successful.")
     except Exception as e:
-        print(f"API bağlantı hatası: {e}")
+        print(f"API connection error: {e}")
         return None
 
-    # 2. Parametreleri Ayarla
+    # 2. Set Parameters
     limit_per_request = 1000  
     num_requests = math.ceil(total_candles / limit_per_request)
     
     all_klines_data = []
     endTime = None  
 
-    print(f"Başlıyor: {symbol} için {total_candles} adet {interval} mum çekilecek...")
-    print(f"Toplam {num_requests} adet API isteği atılacak.")
+    print(f"Starting: Fetching {total_candles} {interval} candles for {symbol}...")
+    print(f"Total of {num_requests} API requests will be made.")
 
     try:
-        # 3. Veri Çekme Döngüsü
+        # 3. Data Fetching Loop
         for i in range(num_requests):
             klines = client.get_klines(
                 symbol=symbol,
@@ -43,12 +41,12 @@ def fetch_binance_data(total_candles, symbol, interval=Client.KLINE_INTERVAL_5MI
             all_klines_data = klines + all_klines_data
             endTime = klines[0][0]
 
-            print(f"Talep {i + 1}/{num_requests} tamamlandı. {len(all_klines_data)} mum çekildi.")
+            print(f"Request {i + 1}/{num_requests} completed. {len(all_klines_data)} candles fetched.")
             time.sleep(0.5) 
 
-        print("Tüm veriler çekildi. DataFrame oluşturuluyor...")
+        print("All data fetched. Creating DataFrame...")
 
-        # 4. Pandas DataFrame'e Dönüştür
+        # 4. Convert to Pandas DataFrame
         columns = [
             'open_time', 'open', 'high', 'low', 'close', 'volume',
             'close_time', 'quote_asset_volume', 'number_of_trades',
@@ -57,52 +55,44 @@ def fetch_binance_data(total_candles, symbol, interval=Client.KLINE_INTERVAL_5MI
         
         df = pd.DataFrame(all_klines_data, columns=columns)
 
-        # 5. Veri Temizleme ve Dönüştürme
+        # 5. Clean and Transform Data
         
-        # --- GÜNCELLEME BURADA BAŞLIYOR ---
-        
-        # Sadece AlgoSapiens için bize lazım olacak ana sütunları seçelim
-        # ÖNEMLİ GÜNCELLEME: 'volume' (BTC adedi) yerine 'quote_asset_volume' (USDT tutarı) alıyoruz.
+        # Select only the main columns we need for AlgoSapiens
+        # IMPORTANT: We are taking 'quote_asset_volume' (USDT amount) instead of 'volume' (BTC amount).
         df = df[['open_time', 'open', 'high', 'low', 'close', 'quote_asset_volume']]
         
-        # Gelecekteki kodun basit kalması için 'quote_asset_volume' adını 'volume' olarak değiştiriyoruz.
-        # Artık 'volume' sütunumuz USDT (Dolar) hacmini temsil ediyor.
+        # To keep future code simple, we rename 'quote_asset_volume' to 'volume'.
+        # Our 'volume' column now represents the USDT (Dollar) volume.
         df = df.rename(columns={'quote_asset_volume': 'volume'})
 
-        # --- GÜNCELLEME BURADA BİTTİ ---
-        
-        # Zaman damgasını (milisan_iye) okunabilir 'datetime' formatına çevir
+        # Convert the timestamp (milliseconds) to a readable 'datetime' format
         df['open_time'] = pd.to_datetime(df['open_time'], unit='ms')
         
-        # Sayısal olması gereken sütunları sayıya (float/int) çevir
-        # (Artık 'volume' sütunu, quote_asset_volume'ü temsil ettiği için bu kod tıkır tıkır çalışır)
+        # Convert columns that should be numeric to float
         for col in ['open', 'high', 'low', 'close', 'volume']:
             df[col] = pd.to_numeric(df[col])
 
-        # Verinin en eskiden en yeniye doğru sıralandığından emin ol
+        # Ensure the data is sorted from oldest to newest
         df = df.sort_values(by='open_time')
         
-        # Mumların mükerrer (duplicate) olmadığından emin ol
+        # Ensure there are no duplicate candles
         df = df.drop_duplicates(subset='open_time')
 
-        print(f"DataFrame oluşturuldu. Toplam {len(df)} adet benzersiz mum.")
+        print(f"DataFrame created. Total {len(df)} unique candles.")
         
-        # 6. Dosya Yolunu Belirle ve Kaydet
+        # 6. Define File Path and Save
         script_dir = Path(__file__).resolve().parent
         data_dir = script_dir.parent / 'data'
         data_dir.mkdir(parents=True, exist_ok=True)
         file_path = data_dir / f'{symbol.lower()}_{interval}_{total_candles}.parquet'
         
-        # 7. Parquet Olarak Kaydet
+        # 7. Save as Parquet
         df.to_parquet(file_path, index=False, engine='pyarrow')
         
-        print(f"Başarılı! Veri şu yola kaydedildi: {file_path}")
+        print(f"Success! Data saved to: {file_path}")
         
         return df
 
     except Exception as e:
-        print(f"Veri çekme veya kaydetme sırasında bir hata oluştu: {e}")
+        print(f"An error occurred during data fetching or saving: {e}")
         return None
-
-
-
