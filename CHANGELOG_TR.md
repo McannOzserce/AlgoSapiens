@@ -28,5 +28,3 @@ Biçim, [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) standardına da
 
 ### Düzeltildi
 - Depo kirliliğini önlemek için `.DS_Store` (macOS sistem dosyaları) `.gitignore` dosyasına eklendi.
-- Ayrışan dal (divergent branch) sorunlarını 'merge' stratejisiyle çözmek için global `git config pull.rebase false` ayarı yapıldı.
-- Commit yazarı (author) hatalarını çözmek için global `git config user.name` ve `user.email` ayarları yapıldı.

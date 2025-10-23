@@ -29,5 +29,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Added `.DS_Store` (macOS system files) to `.gitignore` to prevent repository clutter.
-- Set global `git config pull.rebase false` to resolve divergent branch issues using the 'merge' strategy.
-- Set global `git config user.name` and `user.email` to resolve commit author errors.
