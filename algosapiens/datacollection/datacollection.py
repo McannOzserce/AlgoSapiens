@@ -3,3 +3,8 @@
 # This will get datas on binance Api 
 
 # In first version this collector collect only bitcoin's datas
+
+def main():
+    print("collection main")
+
+
