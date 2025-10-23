@@ -5,3 +5,4 @@
 
 # VS Code ayar klasoru
 .vscode/
+__pycache__/
