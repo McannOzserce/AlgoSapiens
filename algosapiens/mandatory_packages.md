@@ -1,5 +1,0 @@
--pip install pyarrow
-
--pip install python-binance
-
--pip install pandas
