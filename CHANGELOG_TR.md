@@ -21,7 +21,7 @@ Biçim, [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) standardına da
 - `data_collection.py`: Binance API'sinden toplu geçmiş mum verisi çekmek için yeni script eklendi.
 - `data_read.py`: Diskteki veriyi okuyup pandas DataFrame'e yüklemek için yeni script eklendi.
 - Yüksek hızlı okuma/yazma (I/O) performansı ve ölçeklenebilirlik için (50k satırla başarıyla test edildi) CSV/Excel yerine `.parquet` dosya formatı tercih edildi.
-- Root dizine requirements.txt Eklendi.
+- Root dizine `requirements.txt` Eklendi.
 
 ### Değiştirildi
 - **KRİTİK:** `data_collection.py`, `volume` (örn: BTC adedi) yerine `quote_asset_volume` (örn: USDT değeri) çekecek şekilde güncellendi. Bu, finansal güç için çok daha doğru bir sinyaldir.
