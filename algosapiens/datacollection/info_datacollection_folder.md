@@ -4,6 +4,6 @@ Additionally, the details and descriptions of the files contained in this folder
 
 ----------!!!----------
 
-- data_collection.py -  Fetches the required amount of data from the Binance APIs and saves it in PARQUET format into the data folder in the parent directory.
+- `data_collection.py` -  Fetches the required amount of data from the Binance APIs and saves it in PARQUET format into the data folder in the parent directory.
 
-- data_read.py - This script is used to read PARQUET formatted files located in the data folder in the parent directory. It displays the row/column properties (metadata) of the files, as well as the first 5 (head) and the last 5 (tail) rows of data.
+- `data_read.py` - This script is used to read PARQUET formatted files located in the data folder in the parent directory. It displays the row/column properties (metadata) of the files, as well as the first 5 (head) and the last 5 (tail) rows of data.
