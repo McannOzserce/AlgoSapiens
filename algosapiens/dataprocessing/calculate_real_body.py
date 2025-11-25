@@ -3,7 +3,7 @@ import pyarrow as pa
 import pandas as pd
 from pathlib import Path
 
-def calculate_real_body(okunacak_dosya_adi="data.parquet"):
+def calculate(okunacak_dosya_adi="data.parquet"):
     
     # 1. Dosya Yollarını Ayarla
     script_path = Path(__file__).resolve()
