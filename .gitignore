@@ -8,3 +8,5 @@
 .vscode/
 __pycache__/
 /impparameters.txt
+/algosapiens/data/data_1.parquet
+/algosapiens/data/data.parquet
