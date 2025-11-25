@@ -30,3 +30,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Added `.DS_Store` (macOS system files) to `.gitignore` to prevent repository clutter.
+
+## [0.1.1.0] - 2025-11-26 - Data Analysis and Processing
+
+### Added
+- Implemented `dataprocessing` folder
+
+- Implemented an algorithm in `calculate_real_body.py` to calculate the candle body `percentage (rise/fall rate)` on raw data.
+
+- Defined a new column named `realBodyChange` in the dataset.
+
+- The calculation was performed using the `formula ((Close - Open) / Open) * 100`, with results rounded to `5 decimal` places.
+
+- Enabled saving the calculated new data as a separate .parquet file by appending the `_1` suffix to the original filename.
+### Changed
+- update  `/main/data_collector.py`  to `/main/data_collector_main.py`

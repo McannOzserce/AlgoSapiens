@@ -29,3 +29,18 @@ Biçim, [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) standardına da
 
 ### Düzeltildi
 - Depo kirliliğini önlemek için `.DS_Store` (macOS sistem dosyaları) `.gitignore` dosyasına eklendi.
+
+[0.1.1.0] - 2025-11-26 - Veri Analizi ve İşleme
+### Eklendi
+- `dataprocessing` klasörü projeye dahil edildi.
+
+- `calculate_real_body.py` dosyasına, ham veriler üzerinde mum gövde yüzdesini `(yükseliş/düşüş oranı) hesaplayan` bir algoritma eklendi.
+
+- Veri setinde `realBodyChange` adında yeni bir sütun tanımlandı.
+
+- `Hesaplama ((Close - Open) / Open) * 100 formülü` kullanılarak gerçekleştirildi ve sonuçlar `virgülden sonra 5` basamak olacak şekilde yuvarlandı.
+
+- Hesaplanan yeni verilerin, orijinal dosya isminin sonuna `_1` eki getirilerek ayrı bir .parquet dosyası olarak kaydedilmesi sağlandı.
+
+### Değiştirildi
+- `/main/data_collector.py` dosyası `/main/data_collector_main.py` olarak güncellendi.

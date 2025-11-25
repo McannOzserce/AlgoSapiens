@@ -36,7 +36,7 @@ def calculate(okunacak_dosya_adi="data.parquet"):
         df = batch.to_pandas()
         
         # Hesaplama: (Kapanış - Açılış) / Açılış * 100 (5 basamak yuvarla)
-        df['open-close'] = (((df['close'] - df['open']) / df['open']) * 100).round(5)
+        df['realBodyChange'] = (((df['close'] - df['open']) / df['open']) * 100).round(5)
         
         yeni_table = pa.Table.from_pandas(df)
         
