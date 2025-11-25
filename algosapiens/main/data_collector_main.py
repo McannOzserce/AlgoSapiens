@@ -9,8 +9,9 @@ from datacollection.data_read import load_data as read
 
 
 #mainfunction(50000, 'BTCUSDT')
+# 1. parameter determines how many candles will be drawn.
+# 2. parameter determines which coin's candles will be drawn.
+
 calculate_realbody()
 read()
 
-# 1. parameter determines how many candles will be drawn.
-# 2. parameter determines which coin's candles will be drawn.
