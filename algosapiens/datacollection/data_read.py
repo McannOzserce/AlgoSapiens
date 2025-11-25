@@ -8,7 +8,7 @@ from pathlib import Path
 # --- Configuration ---
 # Tell pandas not to use scientific notation (e.g., e+06).
 # Format all floating-point numbers to 2 decimal places for printing.
-pd.set_option('display.float_format', lambda x: '%.2f' % x)
+pd.set_option('display.float_format', lambda x: '%.5f' % x)
 # ---------------------
 
 def load_data(file_name="btcusdt_5m_50000_islenmis.parquet"):
