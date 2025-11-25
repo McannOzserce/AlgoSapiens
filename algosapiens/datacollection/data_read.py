@@ -11,7 +11,7 @@ from pathlib import Path
 pd.set_option('display.float_format', lambda x: '%.2f' % x)
 # ---------------------
 
-def load_data(file_name="btcusdt_5m_50000.parquet"):
+def load_data(file_name="btcusdt_5m_50000_islenmis.parquet"):
     """
     Reads the specified Parquet file from the root 'data' folder
     and returns it as a pandas DataFrame.
