@@ -3,7 +3,7 @@ import pyarrow as pa
 import pandas as pd
 from pathlib import Path
 
-def calculate_real_body(okunacak_dosya_adi="btcusdt_5m_50000.parquet"):
+def calculate_real_body(okunacak_dosya_adi="data.parquet"):
     
     # 1. Dosya Yollarını Ayarla
     script_path = Path(__file__).resolve()
@@ -11,7 +11,7 @@ def calculate_real_body(okunacak_dosya_adi="btcusdt_5m_50000.parquet"):
     project_root = script_dir.parent
     
     # Çıktı dosyasının ismini otomatik üret (örn: dosya_islenmis.parquet)
-    yazilacak_dosya_adi = okunacak_dosya_adi.replace(".parquet", "_islenmis.parquet")
+    yazilacak_dosya_adi = okunacak_dosya_adi.replace(".parquet", "_1.parquet")
 
     okunacak_path = project_root / 'data' / okunacak_dosya_adi
     yazilacak_path = project_root / 'data' / yazilacak_dosya_adi
@@ -50,7 +50,3 @@ def calculate_real_body(okunacak_dosya_adi="btcusdt_5m_50000.parquet"):
         writer.close()
 
     print(f"İşlem tamamlandı! Kaydedilen yer: {yazilacak_path}")
-
-# Fonksiyonu çalıştır
-if __name__ == "__main__":
-    calculate_real_body()

@@ -1,74 +1,61 @@
 # AlgoSapiens - Data Loading Utility
-# Loads the Parquet data file from the /data directory into a pandas DataFrame.
-# Also configures pandas display options for better readability.
-
 import pandas as pd
 from pathlib import Path
 
 # --- Configuration ---
-# Tell pandas not to use scientific notation (e.g., e+06).
-# Format all floating-point numbers to 2 decimal places for printing.
+# Virgülden sonra 5 basamak göster
 pd.set_option('display.float_format', lambda x: '%.5f' % x)
 # ---------------------
 
-def load_data(file_name="btcusdt_5m_50000_islenmis.parquet"):
+def load_data(file_name="data_1.parquet", verbose=True):
     """
-    Reads the specified Parquet file from the root 'data' folder
-    and returns it as a pandas DataFrame.
-    
-    This script assumes it is located within a subfolder 
-    (like '/datacollection').
+    Veriyi okur ve verbose=True ise ekrana rapor basar.
     """
-    
     try:
-        # 1. Define File Path
-        # Get the full path of this script (e.g., .../AlgoSapiens/datacollection/data_read.py)
+        # 1. Dosya Yolunu Bul
         script_path = Path(__file__).resolve()
-        
-        # Get the directory this script is in (e.g., .../AlgoSapiens/datacollection/)
         script_dir = script_path.parent
-        
-        # Get the parent directory (the project root) (e.g., .../AlgoSapiens/)
         project_root = script_dir.parent
-        
-        # Define the full path to the data file
         file_path = project_root / 'data' / file_name
         
-        # 2. Check if the file exists
+        # 2. Dosya Kontrolü
         if not file_path.exists():
-            print(f"Error: File not found! -> {file_path}")
-            print("Please ensure the 'data' folder exists in the project root.")
+            print(f"HATA: Dosya bulunamadı! -> {file_path}")
             return None
             
-        print(f"Reading data: {file_path}")
+        print(f"Veri okunuyor: {file_path}")
         
-        # 3. Read the Parquet File
+        # 3. Dosyayı Oku
         df = pd.read_parquet(file_path)
+        print("Veri hafızaya yüklendi.")
         
-        print("Data loaded into memory successfully.")
+        # --- İŞTE İSTEDİĞİN KISIM ---
+        # Eğer verbose True ise (varsayılan), bilgileri burada basar.
+        # Main dosyasında print yazmana gerek kalmaz.
+        if verbose:
+            print("\n" + "="*40)
+            print(" VERİ ÖNİZLEMESİ (İLK 5 SATIR) ")
+            print("="*40)
+            print(df.head())
+            
+            print("\n" + "="*40)
+            print(" SÜTUN VE TİP BİLGİLERİ ")
+            print("="*40)
+            df.info()
+            
+            print("\n" + "="*40)
+            print(" SON 5 SATIR ")
+            print("="*40)
+            print(df.tail())
+            print("\n")
+        # ----------------------------
+        
         return df
         
     except Exception as e:
-        print(f"An error occurred while reading the file: {e}")
+        print(f"Bir hata oluştu: {e}")
         return None
 
-# This code block runs only when the script is executed directly
+# Bu blok sadece dosyayı tek başına test edersen çalışır
 if __name__ == "__main__":
-    
-    # 1. Load the data
-    data_frame = load_data()
-    
-    # 2. Check if data loading was successful
-    if data_frame is not None:
-        
-        # 3. Display the first 5 rows
-        print("\n--- DataFrame Head ---")
-        print(data_frame.head())
-        
-        # 4. Get info about the DataFrame (columns, types, nulls)
-        print("\n--- DataFrame Info ---")
-        data_frame.info()
-        
-        # 5. Display the last 5 rows
-        print("\n--- DataFrame Tail ---")
-        print(data_frame.tail())
+    load_data()

@@ -84,7 +84,7 @@ def fetch_binance_data(total_candles, symbol, interval=Client.KLINE_INTERVAL_5MI
         script_dir = Path(__file__).resolve().parent
         data_dir = script_dir.parent / 'data'
         data_dir.mkdir(parents=True, exist_ok=True)
-        file_path = data_dir / f'{symbol.lower()}_{interval}_{total_candles}.parquet'
+        file_path = data_dir / f'data.parquet'
         
         # 7. Save as Parquet
         df.to_parquet(file_path, index=False, engine='pyarrow')
