@@ -2,8 +2,9 @@
 .DS_Store
 .AppleDouble
 .LSOverride
-.impparameters.txt
+
 
 # VS Code ayar klasoru
 .vscode/
 __pycache__/
+impparameters.txt/
